@@ -1,13 +1,25 @@
 {
-  "name": "react-native-map-linking",
-  "version": "1.0.1",
+  "name": "@react-native-oh-tpl/react-native-map-linking",
+  "version": "1.0.1-0.0.1",
   "description": "Linking to map for React Native",
-  "main": "index.js",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "react-native": "src/index",
+  "source": "src/index",
+  "harmony": {
+    "alias": "react-native-markdown-display"
+  },
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint --fix --cache ./src",
+    "bob": "bob build",
+    "prepare": "npm run bob"
+  },
   "keywords": [
     "react",
     "native",
     "map",
-    "linking"
+    "linking",
+    "harmony"
   ],
   "author": {
     "name": "starlight36",
@@ -22,6 +34,20 @@
   "license": "MIT",
   "devDependencies": {
     "react": "^15.1.0",
-    "react-native": "^0.28.0"
+    "react-native": "^0.72.5",
+    "react-native-builder-bob": "^0.20.4"
+  },
+  "files": [
+    "harmony",
+    "lib",
+    "src"
+  ],
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module"
+    ]
   }
 }

@@ -54,6 +54,28 @@ function openDialog(urls) {
 
         return Alert.alert('选择地图', '请选择一个地图打开', [...choices, { text: '取消' }]);
       });
+  } else if (Platform.OS === 'harmony') {
+    urls = urls.android;
+    return Promise.all(urls.map(element => Linking.canOpenURL(element[1])))
+      .then((results) => {
+        return urls.filter((element, index) => results[index]).map(url => ({
+          text: url[0],
+          onPress: () => {
+            Linking.openURL(url[1]);
+          },
+        }));
+      }).then(choices => {
+        // 系统内没有任何地图, 推荐下载一个
+        if (choices.length < 1) {
+          return Alert.alert('选择地图', '您还没有安装地图软件。', [
+            { text: '下载高德地图', onPress: () => Linking.openURL('store://appgallery.huawei.com/app/detail?id=C1268244389566675520') },
+            { text: '下载百度地图', onPress: () => Linking.openURL('store://appgallery.huawei.com/app/detail?id=C1268244389566675520') },
+            { text: '取消' }
+          ]);
+        }
+
+        return Alert.alert('选择地图', '请选择一个地图打开', [...choices, { text: '取消' }]);
+      });
   }
 }
 
@@ -97,6 +119,20 @@ export default {
           `http://maps.apple.com/?ll=${location.lat},${location.lng}&q=${title}`,
         ],
       ],
+      harmony: [
+        [
+          '使用高德地图打开',
+          `iosamap://viewMap?sourceApplication=${this.options.appName}&poiname=${title}&lat=${location.lat}&lon=${location.lng}&dev=${location.type === 'gcj02' ? '0' : '1'}`,
+        ],
+        [
+          '使用百度地图打开',
+          `baidumap://map/marker?location=${location.lat},${location.lng}&coord_type=${location.type === 'gcj02' ? 'gcj02' : 'wgs84'}&title=${title}&content=${content}&src=${this.options.appName}`,
+        ],
+        [
+          '使用花瓣地图打开',
+          `maps://locationlnfo?linkSource=${this.options.appName}&destinationLatitude=${location.lat}&destinationLongitude=${location.lng}&destinationName=${title}`,
+        ],
+      ],
     });
   },
 
@@ -133,6 +169,20 @@ export default {
           `http://maps.apple.com/?ll=${distLocation.lat},${distLocation.lng}&q=${distLocation.title}&dirflg=${mode === 'drive' ? 'd' : (mode === 'bus' ? 'r' : 'w')}`,
         ],
       ],
+      harmony: [
+        [
+          '使用高德地图规划路线',
+          `iosamap://path?sourceApplication=${this.options.appName}&slat=${srcLocation && srcLocation.lat}&slon=${srcLocation && srcLocation.lng}&sname=${srcLocation && srcLocation.title}&dlat=${distLocation.lat}&dlon=${distLocation.lng}&dname=${distLocation.title}&dev=${distLocation.type === 'gcj02' ? '0' : '1'}&t=${mode === 'drive' ? '0' : (mode === 'bus' ? '1' : '2')}`,
+        ],
+        [
+          '使用百度地图规划路线',
+          `baidumap://map/direction?origin=${srcLocation ? (srcLocation.lat + ',' + srcLocation.lng) : ''}&destination=${distLocation.lat},${distLocation.lng}&mode=${mode === 'drive' ? 'driving' : (mode === 'bus' ? 'transit' : 'walking')}&coord_type=${distLocation.type === 'gcj02' ? 'gcj02' : 'wgs84'}&src=${this.options.appName}`,
+        ],
+        [
+          '使用花瓣地图打开',
+          `maps://routes?linkSource=$t this.options.appName}&oriqinLatitude=${srcLocation && srcLocation.lat}&oriqinLongitude=${srcLocation && srcLocation.lng}&oriqinName=${srcLocation&& srcLocation.title}&destinationLatitude=${distLocation.lat}&destinationLongitude=${distLocation.Ing}&destinationName=${distLocation.title}&vehicleTvpe=${(mode==='drive') ? '0' : (mode ==='bus') ? '3':'1'}}`
+        ],
+      ],
     });
   },
 
@@ -165,6 +215,20 @@ export default {
         [
           '使用iOS系统地图导航',
           `http://maps.apple.com/?ll=${distLocation.lat + ',' + distLocation.lng}&q=${distLocation.title}&dirflg=d`,
+        ],
+      ],
+      harmony: [
+        [
+          '使用高德地图导航',
+          `iosamap://navi?sourceApplication=${this.options.appName}&poiname=${distLocation.title}&lat=${distLocation.lat}&lon=${distLocation.lng}&dev=${distLocation.type === 'gcj02' ? '0' : '1'}`,
+        ],
+        [
+          '使用百度地图导航',
+          `baidumap://map/direction?origin=&destination=${distLocation.lat},${distLocation.lng}&mode=driving&coord_type=${distLocation.type === 'gcj02' ? 'gcj02' : 'wgs84'}&src=${this.options.appName}`,
+        ],
+        [
+          '使用花瓣地图打开',
+          `maps://navigation/?linkSour ce=${this.options.appName} &destinationLatitude=${distLocation.lat}&destinationLongitude=${distLocation.lng}&destinationName=${distLocation.title}`,
         ],
       ],
     });
