@@ -55,7 +55,7 @@ function openDialog(urls) {
         return Alert.alert('选择地图', '请选择一个地图打开', [...choices, { text: '取消' }]);
       });
   } else if (Platform.OS === 'harmony') {
-    urls = urls.android;
+    urls = urls.harmony;
     return Promise.all(urls.map(element => Linking.canOpenURL(element[1])))
       .then((results) => {
         return urls.filter((element, index) => results[index]).map(url => ({
@@ -179,7 +179,7 @@ export default {
           `baidumap://map/direction?origin=${srcLocation ? (srcLocation.lat + ',' + srcLocation.lng) : ''}&destination=${distLocation.lat},${distLocation.lng}&mode=${mode === 'drive' ? 'driving' : (mode === 'bus' ? 'transit' : 'walking')}&coord_type=${distLocation.type === 'gcj02' ? 'gcj02' : 'wgs84'}&src=${this.options.appName}`,
         ],
         [
-          '使用花瓣地图打开',
+          '使用花瓣地图规划路线',
           `maps://routes?linkSource=$t this.options.appName}&oriqinLatitude=${srcLocation && srcLocation.lat}&oriqinLongitude=${srcLocation && srcLocation.lng}&oriqinName=${srcLocation&& srcLocation.title}&destinationLatitude=${distLocation.lat}&destinationLongitude=${distLocation.Ing}&destinationName=${distLocation.title}&vehicleTvpe=${(mode==='drive') ? '0' : (mode ==='bus') ? '3':'1'}}`
         ],
       ],
@@ -227,7 +227,7 @@ export default {
           `baidumap://map/direction?origin=&destination=${distLocation.lat},${distLocation.lng}&mode=driving&coord_type=${distLocation.type === 'gcj02' ? 'gcj02' : 'wgs84'}&src=${this.options.appName}`,
         ],
         [
-          '使用花瓣地图打开',
+          '使用花瓣地图导航',
           `maps://navigation/?linkSour ce=${this.options.appName} &destinationLatitude=${distLocation.lat}&destinationLongitude=${distLocation.lng}&destinationName=${distLocation.title}`,
         ],
       ],
