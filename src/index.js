@@ -130,7 +130,7 @@ export default {
         ],
         [
           '使用花瓣地图打开',
-          `maps://locationlnfo?linkSource=${this.options.appName}&destinationLatitude=${location.lat}&destinationLongitude=${location.lng}&destinationName=${title}`,
+          `maps://locationInfo?linkSource=${this.options.appName}&destinationLatitude=${location.lat}&destinationLongitude=${location.lng}&destinationName=${title}`,
         ],
       ],
     });
@@ -180,7 +180,7 @@ export default {
         ],
         [
           '使用花瓣地图规划路线',
-          `maps://routes?linkSource=$t this.options.appName}&oriqinLatitude=${srcLocation && srcLocation.lat}&oriqinLongitude=${srcLocation && srcLocation.lng}&oriqinName=${srcLocation&& srcLocation.title}&destinationLatitude=${distLocation.lat}&destinationLongitude=${distLocation.Ing}&destinationName=${distLocation.title}&vehicleTvpe=${(mode==='drive') ? '0' : (mode ==='bus') ? '3':'1'}}`
+          `maps://routes?linkSource=${this.options.appName}&originLatitude=${srcLocation && srcLocation.lat}&originLongitude=${srcLocation && srcLocation.lng}&originName=${srcLocation&& srcLocation.title}&destinationLatitude=${distLocation.lat}&destinationLongitude=${distLocation.Ing}&destinationName=${distLocation.title}&vehicleTvpe=${(mode==='drive') ? '0' : (mode ==='bus') ? '3':'1'}}`
         ],
       ],
     });
@@ -228,7 +228,7 @@ export default {
         ],
         [
           '使用花瓣地图导航',
-          `maps://navigation/?linkSour ce=${this.options.appName} &destinationLatitude=${distLocation.lat}&destinationLongitude=${distLocation.lng}&destinationName=${distLocation.title}`,
+          `maps://navigation/?linkSource=${this.options.appName}&destinationLatitude=${distLocation.lat}&destinationLongitude=${distLocation.lng}&destinationName=${distLocation.title}`,
         ],
       ],
     });
