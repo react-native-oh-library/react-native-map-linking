@@ -69,8 +69,9 @@ function openDialog(urls) {
         if (choices.length < 1) {
           return Alert.alert('选择地图', '您还没有安装地图软件。', [
             { text: '下载高德地图', onPress: () => Linking.openURL('store://appgallery.huawei.com/app/detail?id=C1268244389566675520') },
-            { text: '下载百度地图', onPress: () => Linking.openURL('store://appgallery.huawei.com/app/detail?id=C1268244389566675520') },
-            { text: '取消' }
+            { text: '下载百度地图', onPress: () => Linking.openURL('store://appgallery.huawei.com/app/detail?id=C1268244389566675520') },//百度地图暂未提供应用市场地址
+            { text: '取消' },
+            {cancelable: true,}
           ]);
         }
 
@@ -180,7 +181,7 @@ export default {
         ],
         [
           '使用花瓣地图规划路线',
-          `maps://routes?linkSource=${this.options.appName}&originLatitude=${srcLocation && srcLocation.lat}&originLongitude=${srcLocation && srcLocation.lng}&originName=${srcLocation&& srcLocation.title}&destinationLatitude=${distLocation.lat}&destinationLongitude=${distLocation.Ing}&destinationName=${distLocation.title}&vehicleTvpe=${(mode==='drive') ? '0' : (mode ==='bus') ? '3':'1'}}`
+          `maps://routes?linkSource=${this.options.appName}&originLatitude=${srcLocation && srcLocation.lat}&originLongitude=${srcLocation && srcLocation.lng}&originName=${srcLocation&& srcLocation.title}&destinationLatitude=${distLocation.lat}&destinationLongitude=${distLocation.lng}&destinationName=${distLocation.title}&vehicleType=${mode==='drive' ? '0' : (mode ==='bus' ? '3':'1')}`
         ],
       ],
     });
